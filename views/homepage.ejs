@@ -1,0 +1,25 @@
+<%- include('includes/navbar.ejs') %>
+<div class="container ">
+    <h3 class="text-center my-4"> This is an app to write diary entries </h1>  
+    <% if(isAuthenticated){ %>
+        <h5>Hey <%= username %> Welcome to Diary App <br> You can write your entries here as well as read your previous entries</h5>
+        <div class="mt-4 p-2 container border border-3 rounded shadow-lg">
+            <h1 class="text-center text-danger">Today's Entry</h1>
+            <h3 class="text-center"><%= year %></h3>
+            <h6 class="text-center"><%= day %> / <%= month %></h6>
+            <form action="/entry" method="post">
+                <div class="form-group my-4 text-center">
+                    
+                    <input type="text" class="form-control" id="Title" placeholder="Title" name="title">
+                  </div>
+                <div class="form-outline text-center">
+                    <textarea class="form-control" id="textAreaExample1" rows="10" placeholder="How was your day?" name="entry"></textarea>
+                </div>
+                <button type="submit" class=" mt-4 btn btn-warning ">Submit</button>
+            </div>
+        </form>
+        <div class="space " style="height: 50px;"></div>
+    <% } %>
+</div>
+</body>
+</html>
