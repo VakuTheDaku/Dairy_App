@@ -8,6 +8,7 @@ router.get('/register',controllers.registerpage)
 router.post('/store',controllers.register)
 router.post('/login',controllers.login)
 router.post('/entry',controllers.entry)
+router.post('/diary', controllers.diary)
 router.get('/login',(req,res,next)=>{
     res.render('loginpage',{pagetitle: 'Login', name: 'loginpage', isAuthenticated: false, passnomatch: false})
 })

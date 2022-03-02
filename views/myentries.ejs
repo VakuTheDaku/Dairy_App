@@ -1,5 +1,12 @@
 <%- include('includes/navbar.ejs') %>
-<form action="/entry" class="my-4 mx-4" method="post">
-    <input type="date" id="birthday" name="birthday">
+<form action="/diary" class="my-4 mx-4" method="post">
+    <input type="date" id="date" name="date">
     <button type="submit" class=" btn btn-warning ">Submit</button>
 </form>
+<% if(title&&content) {%>
+    <h2 class="text-center"><%= title %></h2>
+    <br>
+    <h5 class="text-center"><%= content %></h5>
+<% } else { %>
+    <h5>No entries on this day</h5>   
+    <% } %>

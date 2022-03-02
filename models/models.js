@@ -1,5 +1,13 @@
 const Sequelize =  require('sequelize')
 const sequelize = require('../util/database')
+let date=new Date()
+var day=date.getDate()
+var month=date.getMonth()
+const monthNames = ["January", "February", "March", "April", "May", "June",
+"July", "August", "September", "October", "November", "December"
+];
+var monthname=monthNames[month]
+var year=date.getFullYear()
 const User = sequelize.define('User', {
     id: {
         type: Sequelize.INTEGER,
@@ -35,6 +43,11 @@ const Entry = sequelize.define('Entry', {
     content: {
         type: Sequelize.TEXT,
         allowNull: false,
+    },
+    date: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        
     }
 })
 module.exports= {
