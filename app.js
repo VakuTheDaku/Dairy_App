@@ -1,15 +1,15 @@
 const express= require('express')
 const app=express()
-
+require('dotenv').config()
 const sequelize=require('./util/database')
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 var options = {
-	host: 'eu-cdbr-west-02.cleardb.net',
+	host: process.env.HOST,
 	
-	user: 'b481f03d537d7e',
-	password: '2a5d63b0',
-	database: 'heroku_8063a13ee0c730a',
+	user: process.env.USER,
+	password: process.env.PASSWORD,
+	database: process.env.DATABASE,
     
 };
 
