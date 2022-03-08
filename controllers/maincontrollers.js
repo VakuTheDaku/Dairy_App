@@ -117,6 +117,7 @@ const entry=(req,res,next)=>{
             entries.title=req.body.title
             console.log(req.body.entry)
             entries.content=req.body.entry
+            entries.UserId=req.session.user.id
             console.log(entries.dataValues.content)
             entries.save()
             console.log(entries.dataValues.content)
