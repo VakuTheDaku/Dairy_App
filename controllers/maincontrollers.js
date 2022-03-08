@@ -149,7 +149,7 @@ const diary=(req,res,next)=>{
     
     todaydate=date2.join("/")
     console.log(todaydate)
-    Diary.findAll({where: {UserId: req.session.user.id}}).then((result)=>{
+    Diary.findAll({where: {UserId: req.session.user[0].id}}).then((result)=>{
         if(result){
             result.forEach(element => {
                 if(element.dataValues.date==todaydate){
