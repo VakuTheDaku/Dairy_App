@@ -82,7 +82,7 @@ const login=(req,res,next)=>{
         console.log(user[0].password)
         bcrypt.compare(password, user[0].password).then((result)=>{
             if(result) {
-                req.session.user=user
+                req.session.user=user[0]
                 req.session.isLoggedIn=true
                 console.log(user[0].name)
                 req.session.id=user[0].id
