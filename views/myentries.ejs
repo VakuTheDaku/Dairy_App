@@ -1,12 +1,38 @@
 <%- include('includes/navbar.ejs') %>
-<form action="/diary" class="my-4 mx-4" method="post">
-    <input type="date" id="date" name="date">
-    <button type="submit" class=" btn btn-warning ">Submit</button>
-</form>
-<% if(title&&content) {%>
-    <h2 class="text-center"><%= title %></h2>
-    <br>
-    <h5 class="text-center"><%= content %></h5>
-<% } else { %>
-    <h5>No entries on this day</h5>   
-    <% } %>
+<div class="container">
+<div class="row">
+    <div class="col-lg-4 ">
+        <form action="/diary" class="my-4 mx-4" method="post">
+            <input type="date" id="date" name="date">
+            <button type="submit" class=" btn btn-warning ">Submit</button>
+        </form>
+        <% for(var i=0; i< array.length; i++) { %>
+            
+        <ul style="list-style: none;">
+            <div class="text-center">
+                <li>
+                <form action="/diary" method="post">
+                    <input type="hidden" value="<%= array[i].dataValues.date %>" name="date">
+                    <button type="submit" class="btn-warning btn-large"><p><%= array[i].dataValues.date %></p> </button>
+                </form>
+                
+                <%= array[i].dataValues.title %>
+            </li>
+        </div>
+        </ul>
+               
+        <% } %>
+    </div>
+    <div class="col-lg-8 text-center">
+        <% if(title&&content) {%>
+            <h2 class="text-center"><%= title %></h2>
+            <br>
+            <h5 class="text-center"><%= content %></h5>
+        <% } else { %>
+            <h5 class="mt-4">No entries on this day</h5>   
+            <% } %>
+    </div>
+    </div>
+</div>
+</body>
+</html>

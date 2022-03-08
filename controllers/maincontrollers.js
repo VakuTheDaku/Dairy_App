@@ -12,9 +12,28 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 ];
 var monthname=monthNames[month]
 var year=date.getFullYear()
+
 const homepage=(req,res,next)=>{
+    var todaydate=("0"+day).slice(-2)+"/"+("0"+month).slice(-2)+"/"+year
+    isLoggedIn=req.session.isLoggedIn===true
+    console.log(req.session)
+    if(isLoggedIn===true){
+    Diary.findAll({where: {UserId: req.session.user.id, date: todaydate}}).then((result)=>{
+        if(result[0]!=null){
+            
+            res.render('homepage',{pagetitle: 'Home', name: 'homepage', isAuthenticated: isLoggedIn, username: req.session.username, day: day, month: monthname, year: year, title: result[0].dataValues.title, content: result[0].dataValues.content})
+        }
+        else{
+            res.render('homepage',{pagetitle: 'Home', name: 'homepage', isAuthenticated: isLoggedIn, username: req.session.username, day: day, month: monthname, year: year, title: '', content: ''})
+            
+        }
+        
+    })
+}else{
+    res.render('homepage',{pagetitle: 'Home', name: 'homepage', isAuthenticated: isLoggedIn, username: req.session.username, day: day, month: monthname, year: year, title: '', content: ''})
     
-    res.render('homepage',{pagetitle: 'Home', name: 'homepage', isAuthenticated: req.session.isLoggedIn, username: req.session.username, day: day, month: monthname, year: year})}
+}
+}
 const registerpage=(req,res,next)=>{
     res.render('register',{pagetitle: 'Register', name: 'registerpage', isAuthenticated: false, sameemail: false })}
 const register=async (req,res,next)=>{
@@ -28,12 +47,20 @@ const register=async (req,res,next)=>{
                 name: username,
                 email: email,
                 password: hashedpass,
-            }).then().catch(err=>{
+            }).then((user)=>{
+                User.findOne({where: {email: email}}).then((user)=>{
+                    console.log(user)
+                    req.session.isLoggedIn=true
+                    req.session.user=user
+                    return res.redirect('/')
+                }).catch(err=>console.log(err))
+                
+            }).catch(err=>{
                 console.log(err)
             })
-            req.session.user=user
-            req.session.isLoggedIn=true
-            res.redirect('/')
+            
+            
+            
         }
         else{
             req.session.isLoggedIn=false
@@ -51,6 +78,7 @@ const login=(req,res,next)=>{
     password=req.body.password
     
     User.findAll({where: {email: email}}).then(async (user)=>{
+        if(user[0]!=null){
         console.log(user[0].password)
         bcrypt.compare(password, user[0].password).then((result)=>{
             if(result) {
@@ -64,49 +92,96 @@ const login=(req,res,next)=>{
             }
             else{
                 const isLoggedIn= req.session.isLoggedIn===true
-                res.render('loginpage',{pagetitle: 'Login', name: 'loginpage', isAuthenticated: isLoggedIn, passnomatch: true})
+                res.render('loginpage',{pagetitle: 'Login', name: 'loginpage', isAuthenticated: isLoggedIn, invalid: true})
             }
+        
     
         }).catch((err)=>console.log(err))
+    }
+    else{
+        const isLoggedIn= req.session.isLoggedIn===true
+        res.render('loginpage',{pagetitle: 'Login', name: 'loginpage', isAuthenticated: isLoggedIn, invalid: true})
+    }
     })
 }
 const entry=(req,res,next)=>{
+    var todaydate=("0"+day).slice(-2)+"/"+("0"+month).slice(-2)+"/"+year
+    isLoggedIn=req.session.isLoggedIn===true
+    console.log(req.body.title)
     
-    Diary.create({
-        title: req.body.title,
-        content: req.body.entry,
-        date: ("0"+day).slice(-2)+"/"+("0"+month).slice(-2)+"/"+year,
-        UserId: req.session.user[0].id
+    Diary.findOne({where: {date: todaydate}}).then((entries)=>{
         
-    }
-    ).then(res.redirect('/')).catch((err)=>console.log(err))
+        console.log(entries)
+        if(entries!=null){
+            
+            entries.title=req.body.title
+            console.log(req.body.entry)
+            entries.content=req.body.entry
+            console.log(entries.dataValues.content)
+            entries.save()
+            console.log(entries.dataValues.content)
+            res.redirect('/')
+           
+        }
+        else{
+            Diary.create({
+                title: req.body.title,
+                content: req.body.entry,
+                date: ("0"+day).slice(-2)+"/"+("0"+month).slice(-2)+"/"+year,
+                UserId: req.session.user[0].id
+                
+            }
+            ).then(res.redirect('/')).catch((err)=>console.log(err))
+        }
+
+
+    }).catch((err)=>console.log(err))
+    
+
+
+
+    
 }
 const diary=(req,res,next)=>{
-    console.log(req.body)
+    const isLoggedIn=req.session.isLoggedIn===true
+    console.log(req.body.date)
+    date2=req.body.date.split('-').reverse()
+    
+    todaydate=date2.join("/")
+    console.log(todaydate)
     Diary.findAll({where: {UserId: req.session.user[0].id}}).then((result)=>{
         if(result){
             result.forEach(element => {
-                
-                date1=element.dataValues.date.split('/')
-                date2=req.body.date.split('-').reverse()
-                console.log(date1, date2)
-                if(JSON.stringify(date1)==JSON.stringify(date2))
-                {
-                     
+                if(element.dataValues.date==todaydate){
                     title=element.dataValues.title
                     content=element.dataValues.content
-                    res.render('myentries',{pagetitle: 'Diary', name: 'entrypage', isAuthenticated: false, passnomatch: false, title:title, content:content})
+                    res.render('myentries',{pagetitle: 'Diary', name: 'entrypage', isAuthenticated: isLoggedIn, passnomatch: false,array:result, title:title, content:content})
                 }
-                else{
-                    res.render('myentries',{pagetitle: 'Diary', name: 'entrypage', isAuthenticated: false, passnomatch: false})
-                }
+            });
+          } 
                 
             });
             
             
         }
-    })
-}
-
+    
+const diarypage=(req,res,next)=>{
+    const isLoggedIn=req.session.isLoggedIn===true
+    Diary.findAll({where: {UserId: req.session.user.id}}).then((result)=>{
+        if(result){
+            
+                console.log(result)
+                
+                title=null
+                content=null     
+                
+                res.render('myentries',{pagetitle: 'Diary', name: 'entrypage', isAuthenticated: isLoggedIn, passnomatch: false,array:result, title:title, content:content})
+            
+                
+                
+        }
+    });
+}      
+   
 module.exports={homepage: homepage,
-                registerpage: registerpage, register:register, login:login, entry:entry, diary:diary}
+                registerpage: registerpage, register:register, login:login, entry:entry, diary:diary, diarypage:diarypage}

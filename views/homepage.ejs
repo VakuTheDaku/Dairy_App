@@ -10,12 +10,12 @@
             <form action="/entry" method="post">
                 <div class="form-group my-4 text-center">
                     
-                    <input type="text" class="form-control" id="Title" placeholder="Title" name="title">
+                    <input type="text" class="form-control" id="Title" placeholder="Title" value="<%= title !== '' ? title : '' %>" name="title">
                   </div>
                 <div class="form-outline text-center">
-                    <textarea class="form-control" id="textAreaExample1" rows="10" placeholder="How was your day?" name="entry"></textarea>
+                    <textarea class="form-control" id="textAreaExample1" rows="10" placeholder="<%= content !== '' ? '' : 'How was your day' %>" name="entry"><% if(content) { %> <%= content %> <% } %></textarea>
                 </div>
-                <button type="submit" class=" mt-4 btn btn-warning ">Submit</button>
+                <button type="submit" class=" mt-4 btn btn-warning ">Save</button>
             </div>
         </form>
         <div class="space " style="height: 50px;"></div>
