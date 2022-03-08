@@ -30,7 +30,7 @@ app.use(routes)
 sequelize.sync().then(result=>{
     
     app.listen(process.env.PORT || 8000,()=>{
-		console.log("listening on 5000")})
+		console.log("listening on 8000")})
 }).catch(err=>{
     console.log(err)
 })
