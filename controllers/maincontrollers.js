@@ -128,7 +128,7 @@ const entry=(req,res,next)=>{
                 title: req.body.title,
                 content: req.body.entry,
                 date: ("0"+day).slice(-2)+"/"+("0"+month).slice(-2)+"/"+year,
-                UserId: req.session.user[0].id
+                UserId: req.session.user.id
                 
             }
             ).then(res.redirect('/')).catch((err)=>console.log(err))
