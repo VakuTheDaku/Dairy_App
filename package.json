@@ -4,7 +4,8 @@
   "description": "An app to record your entries for the day",
   "main": "index.js",
   "scripts": {
-    "test": "node app.js"
+    "test": "node app.js",
+    "start": "node app.js"
   },
   "author": "Vinay, Amal",
   "license": "ISC",
