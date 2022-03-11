@@ -9,7 +9,7 @@ This project is made by Vinay and Amal. It is awesome as you can give your entri
 Node js / 35
 
 ## Link to product walkthrough
-[link to video]
+vedio very bad, so private
 
 ## How it Works ?
 1. Node js for backend
@@ -34,7 +34,7 @@ Node js / 35
 "bootstrap": "^5.1.3"
 
 ## How to configure
-We have already hosted it in here : 
+We have already hosted it in here : <a href="https://diary-app-tinkerhub.herokuapp.com/">Dairy App</a>
 but if u want to run it
 1. clone the project, go to main directory and in terminal give - "npm i". (make sure to have npm installed)
 

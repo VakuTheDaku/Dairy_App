@@ -20,7 +20,7 @@ router.get('/logout',async (req,res,next)=>{
 })
 router.get('/entry',controllers.diarypage)
 
-router.get('/new',(req,res)=>res.render('homepage1'))
+// router.get('/new',(req,res)=>res.render('homepage1'))
 // router.get('/entry',(req,res,next)=>{
 //     res.render('myentries',{pagetitle: 'Diary', name: 'entrypage', isAuthenticated: false, passnomatch: false, title: "no entry found", content: ""})
 
