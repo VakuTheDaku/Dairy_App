@@ -23,21 +23,21 @@ const homepage=(req,res,next)=>{
     Diary.findAll({where: {UserId: req.session.user.id, date: todaydate}}).then((result)=>{
         if(result[0]!=null){
             
-            res.render('homepage',{pagetitle: 'Home', name: 'homepage', isAuthenticated: isLoggedIn, username: req.session.username, day: day, month: monthname, year: year, title: result[0].dataValues.title, content: result[0].dataValues.content})
+            res.render('homepage1',{pagetitle: 'Home', name: 'homepage', isAuthenticated: isLoggedIn, username: req.session.username, day: day, month: monthname, year: year, title: result[0].dataValues.title, content: result[0].dataValues.content})
         }
         else{
-            res.render('homepage',{pagetitle: 'Home', name: 'homepage', isAuthenticated: isLoggedIn, username: req.session.username, day: day, month: monthname, year: year, title: '', content: ''})
+            res.render('homepage1',{pagetitle: 'Home', name: 'homepage', isAuthenticated: isLoggedIn, username: req.session.username, day: day, month: monthname, year: year, title: '', content: ''})
             
         }
         
     })
 }else{
-    res.render('homepage',{pagetitle: 'Home', name: 'homepage', isAuthenticated: isLoggedIn, username: req.session.username, day: day, month: monthname, year: year, title: '', content: ''})
+    res.render('homepage1',{pagetitle: 'Home', name: 'homepage', isAuthenticated: isLoggedIn, username: req.session.username, day: day, month: monthname, year: year, title: '', content: ''})
     
 }
 }
 const registerpage=(req,res,next)=>{
-    res.render('register',{pagetitle: 'Register', name: 'registerpage', isAuthenticated: false, sameemail: false })}
+    res.render('register1',{pagetitle: 'Register', name: 'registerpage', isAuthenticated: false, sameemail: false })}
 const register=async (req,res,next)=>{
     console.log(req.body)
     const {username, email, password}= req.body
@@ -66,7 +66,7 @@ const register=async (req,res,next)=>{
         }
         else{
             req.session.isLoggedIn=false
-            res.render('register',{pagetitle: 'Register', name: 'registerpage', isAuthenticated: req.session.isLoggedIn, sameemail: true})
+            res.render('register1',{pagetitle: 'Register', name: 'registerpage', isAuthenticated: req.session.isLoggedIn, sameemail: true})
         
         }
 
@@ -94,7 +94,7 @@ const login=(req,res,next)=>{
             }
             else{
                 const isLoggedIn= req.session.isLoggedIn===true
-                res.render('loginpage',{pagetitle: 'Login', name: 'loginpage', isAuthenticated: isLoggedIn, invalid: true})
+                res.render('loginpage1',{pagetitle: 'Login', name: 'loginpage', isAuthenticated: isLoggedIn, invalid: true})
             }
         
     
@@ -102,7 +102,7 @@ const login=(req,res,next)=>{
     }
     else{
         const isLoggedIn= req.session.isLoggedIn===true
-        res.render('loginpage',{pagetitle: 'Login', name: 'loginpage', isAuthenticated: isLoggedIn, invalid: true})
+        res.render('loginpage1',{pagetitle: 'Login', name: 'loginpage', isAuthenticated: isLoggedIn, invalid: true})
     }
     })
 }
@@ -158,7 +158,7 @@ const diary=(req,res,next)=>{
                 if(element.dataValues.date==todaydate){
                     title=element.dataValues.title
                     content= md.render(element.dataValues.content)
-                    res.render('myentries',{pagetitle: 'Diary', name: 'entrypage', isAuthenticated: isLoggedIn, passnomatch: false,array:result, title:title, content:content})
+                    res.render('new',{pagetitle: 'Diary', name: 'entrypage', isAuthenticated: isLoggedIn, passnomatch: false,array:result, title:title, content:content})
                 }
             });
           } 
@@ -178,7 +178,7 @@ const diarypage=(req,res,next)=>{
                 title=null
                 content=null     
                 
-                res.render('myentries',{pagetitle: 'Diary', name: 'entrypage', isAuthenticated: isLoggedIn, passnomatch: false,array:result, title:title, content:content})
+                res.render('new',{pagetitle: 'Diary', name: 'entrypage', isAuthenticated: isLoggedIn, passnomatch: false,array:result, title:title, content:content})
             
                 
                 

@@ -1,0 +1,77 @@
+<%- include('includes/navbar1.ejs') %>
+
+<div class="container-wrap">
+    <aside id="fh5co-hero">
+        <div class="flexslider">
+            <ul class="slides">
+               <li style="background-image: url(images/img_bg_3.jpg);">
+                   <div class="overlay-gradient"></div>
+                   <div class="row">
+                       <div class="col-md-6 col-md-offset-3 slider-text slider-text-bg">
+                           <div class="slider-text-inner text-center">
+                               <h1> This is an app to write diary entries </h1>
+                               
+                           </div>
+                       </div>
+                   </div>
+               </li>		   	
+              </ul>
+          </div>
+    </aside>		
+    <div id="fh5co-work">
+        <div class="row">
+            <div class="col-md-8">
+               
+            
+                <% if(isAuthenticated){ %>
+                    <h5>Hey <%= username %> Welcome to Diary App <br> You can write your entries here as well as read your previous entries</h5>
+                    <div class="mt-4 p-2 container border border-3 rounded shadow-lg">
+                        <h1 class="text-center text-danger">Today's Entry</h1>
+                        <h3 class="text-center"><%= year %></h3>
+                        <h6 class="text-center"><%= day %> / <%= month %></h6>
+                        <form action="/entry" class="text-center" method="post">
+                            <div class="form-group col-6 my-4 text-center" style="width: 40%;">
+                                
+                                <input type="text" class="form-control w-4" id="Title" placeholder="Title" value="<%= title !== '' ? title : '' %>" name="title">
+                              </div>
+                            <div class="form-outline mt-4 text-center" style="width: 80%;">
+                                <textarea class="form-control" id="textAreaExample1" rows="10" placeholder="<%= content !== '' ? '' : 'How was your day' %>" name="entry"><% if(content) { %> <%= content %> <% } %></textarea>
+                            </div>
+                            <div class="space " style="height: 20px;"></div>
+                            <button type="submit" class="mt-4 btn btn-warning ">Save</button>
+                        </div>
+                    </form>
+                    <div class="space " style="height: 50px;"></div>
+                <% } %>
+            </div>
+            </div>
+            </div>
+            </div>
+            
+        </div>
+    </div>
+</div><!-- END container-wrap -->
+
+
+
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+<!-- jQuery Easing -->
+<script src="js/jquery.easing.1.3.js"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Waypoints -->
+<script src="js/jquery.waypoints.min.js"></script>
+<!-- Flexslider -->
+<script src="js/jquery.flexslider-min.js"></script>
+<!-- Magnific Popup -->
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/magnific-popup-options.js"></script>
+<!-- Counters -->
+<script src="js/jquery.countTo.js"></script>
+<!-- Main -->
+<script src="js/main.js"></script>
+
+</body>
+</html>
+

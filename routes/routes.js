@@ -12,13 +12,15 @@ router.post('/login',controllers.login)
 router.post('/entry',controllers.entry)
 router.post('/diary', controllers.diary)
 router.get('/login',(req,res,next)=>{
-    res.render('loginpage',{pagetitle: 'Login', name: 'loginpage', isAuthenticated: false, invalid: false})
+    res.render('loginpage1',{pagetitle: 'Login', name: 'loginpage', isAuthenticated: false, invalid: false})
 })
 router.get('/logout',async (req,res,next)=>{
     req.session.destroy()
     res.redirect('/')
 })
 router.get('/entry',controllers.diarypage)
+
+router.get('/new',(req,res)=>res.render('homepage1'))
 // router.get('/entry',(req,res,next)=>{
 //     res.render('myentries',{pagetitle: 'Diary', name: 'entrypage', isAuthenticated: false, passnomatch: false, title: "no entry found", content: ""})
 
