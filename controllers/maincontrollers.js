@@ -6,6 +6,8 @@ const Diary=model.Entry
 let date=new Date()
 var day=date.getDate()
 var month=date.getMonth()+1
+const markdownit= require('markdown-it'),
+md=new markdownit()
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"
@@ -155,7 +157,7 @@ const diary=(req,res,next)=>{
             result.forEach(element => {
                 if(element.dataValues.date==todaydate){
                     title=element.dataValues.title
-                    content=element.dataValues.content
+                    content= md.render(element.dataValues.content)
                     res.render('myentries',{pagetitle: 'Diary', name: 'entrypage', isAuthenticated: isLoggedIn, passnomatch: false,array:result, title:title, content:content})
                 }
             });
